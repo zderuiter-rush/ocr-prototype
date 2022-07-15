@@ -18,7 +18,9 @@ export function init() {
     vid.toggle = !vid.toggle;
     if (vid.toggle) {
       vid.stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
+        video: {
+          facingMode: "environment",
+        },
         audio: false,
       });
       video.srcObject = vid.stream;
