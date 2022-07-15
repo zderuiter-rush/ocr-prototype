@@ -15,6 +15,7 @@ export function init() {
   const canvas = document.querySelector("#canvas");
 
   camera_button.addEventListener("click", async function () {
+    document.querySelector(".output").innerHTML = "video";
     vid.toggle = !vid.toggle;
     if (vid.toggle) {
       navigator.mediaDevices
@@ -28,10 +29,12 @@ export function init() {
           vid.stream = stream;
           video.srcObject = stream;
         });
+      document.querySelector(".output").innerHTML = "video started";
     } else {
       vid.stream.getTracks().forEach((track) => {
         track.stop();
       });
+      document.querySelector(".output").innerHTML = "video ended";
     }
 
     return new Promise((resolve) => {
