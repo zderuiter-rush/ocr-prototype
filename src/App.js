@@ -20,7 +20,13 @@ export default class App extends Component {
             </tr>
             <tr>
               <td>
-                <video id="video" width="320" height="240" autoPlay></video>
+                <video
+                  id="video"
+                  width="320"
+                  height="240"
+                  autoPlay
+                  playsInline
+                ></video>
               </td>
             </tr>
             <tr>
