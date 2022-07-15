@@ -10,25 +10,35 @@ const vid = {
 
 export function init() {
   const camera_button = document.querySelector("#start-camera");
-  const video = document.querySelector("#video");
   const click_button = document.querySelector("#click-photo");
+  const video = document.querySelector("#video");
   const canvas = document.querySelector("#canvas");
 
   camera_button.addEventListener("click", async function () {
     vid.toggle = !vid.toggle;
     if (vid.toggle) {
-      vid.stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: "environment",
-        },
-        audio: false,
-      });
-      video.srcObject = vid.stream;
+      navigator.mediaDevices
+        .getUserMedia({
+          audio: false,
+          video: {
+            facingMode: "environment",
+          },
+        })
+        .then((stream) => {
+          vid.stream = stream;
+          video.srcObject = stream;
+        });
     } else {
       vid.stream.getTracks().forEach((track) => {
         track.stop();
       });
     }
+
+    return new Promise((resolve) => {
+      video.onloadedmetadata = () => {
+        resolve(video);
+      };
+    });
   });
 
   click_button.addEventListener("click", function () {
